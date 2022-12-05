@@ -8,7 +8,9 @@
     <title>Repo Visualizer</title>
 </head>
 <body>
-    <h1>Welcome, {{account_name}}</h1>
+    {% if account_name %}
+        <h1>Welcome, {{account_name}}</h1>
+    {% endif %}
     <div class="container">
         <div id="content" style="margin-top:3em">{% block content %}{% endblock %}</div>
     </div>

@@ -2,6 +2,8 @@
 try:
     from pathlib import Path
     import os
+    import requests
+    from requests.auth import HTTPBasicAuth
 
     #LINE 7 is for development purposes ONLY
     os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
@@ -25,7 +27,7 @@ app = Flask(__name__)
 app.config["SECRET_KEY"]=os.getenv('SECRET_KEY')
 
 github_blueprint = make_github_blueprint(client_id=os.getenv('CLIENT_ID'),
-                                         client_secret=os.getenv('CLIENT_SECRET'))
+                                         client_secret=os.getenv('CLIENT_SECRET'), scope='repo')
 
 app.register_blueprint(github_blueprint, url_prefix='/github_login')
 
@@ -39,11 +41,21 @@ def github_login():
         account_info = github.get('/user')
         if account_info.ok:
             account_info_json = account_info.json()
-            return render_template("credentials.html", account_name=account_info_json["login"])
+            return render_template("credentials.html", account_name=account_info_json['login'])
 
     return '<h1>Request failed!</h1>'
 
-# @app.route('/credentials.html')
+@app.route('/result', methods=['POST', 'GET'])
+def result():
+    if request.method=='POST':
+        ownername=request.form['ownername']
+        repo_name=request.form['reponame']
+
+        url=f"/repos/{ownername}/{repo_name}/commits"
+        fetched_data=github.get(url)
+        if fetched_data.ok:
+            fetched_data_json=fetched_data.json()
+            return render_template('result.html', repo_data=fetched_data_json)
 
 if __name__ == "__main__":
     app.run(debug=True)
