@@ -22,7 +22,7 @@ except Exception as e:
 
 
 app = Flask(__name__)
-app.config["SECRET_KEY"]=os.getenv('CLIENT_ID')
+app.config["SECRET_KEY"]=os.getenv('SECRET_KEY')
 
 github_blueprint = make_github_blueprint(client_id=os.getenv('CLIENT_ID'),
                                          client_secret=os.getenv('CLIENT_SECRET'))
@@ -39,10 +39,11 @@ def github_login():
         account_info = github.get('/user')
         if account_info.ok:
             account_info_json = account_info.json()
-            return '<h1>Your Github name is {}'.format(account_info_json['login'])
+            return render_template("credentials.html", account_name=account_info_json["login"])
 
     return '<h1>Request failed!</h1>'
 
+# @app.route('/credentials.html')
 
 if __name__ == "__main__":
     app.run(debug=True)

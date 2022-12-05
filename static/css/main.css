@@ -1,0 +1,17 @@
+body
+{
+    background-color: aquamarine;
+}
+.container
+{
+    width: 100%;
+    border: solid 1px black;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.content
+{
+    border: solid 1px red;
+}
