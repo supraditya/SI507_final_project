@@ -45,3 +45,9 @@ def save_cache(cache_dict):
     fw = open('cache.json',"w")
     fw.write(dumped_json_cache)
     fw.close()
+
+def is_dict_in_cache(cache_dict, dict_to_be_added):
+    #TODO: Add docstring
+    if dict_to_be_added not in cache_dict.items():
+        return False
+    return True
