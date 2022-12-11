@@ -1,6 +1,12 @@
 {% extends "base.html" %} {% block content %}
 <link rel="stylesheet" type="text/css" href="../static/css/main.css"> 
 <body>
-    <p>{{repo_data}}</p>
+    {% if repo_data %}
+        <p>{{repo_data}}</p>
+    {% endif %}
+
+    {% if graph_data %}
+    <p>{{graph_data}}</p>
+    {% endif %}
 </body>
 {% endblock %}

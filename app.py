@@ -5,6 +5,7 @@ try:
     import requests
     from requests.auth import HTTPBasicAuth
     import cache_functions as cache
+    import helper_functions as helpers
 
     #LINE 7 is for development purposes ONLY, will be needed to execute OAuth in http localhost servers
     os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
@@ -64,7 +65,6 @@ def branch_select():
         branch_url=f"/repos/{ownername}/{APP_CACHE['repo_name']}/branches"
         branch_data=github.get(branch_url)
 
-
         if branch_data.ok:
             branch_data_json=branch_data.json()
             if cache.is_dict_in_cache(APP_CACHE, branch_data_json)==False:
@@ -76,24 +76,28 @@ def branch_select():
             return render_template('credentials.html', account_name=APP_CACHE['account_info']['login'], branch_data=branch_names)
         else:
             return branch_url
+
 @app.route('/result', methods=['POST', 'GET'])
 def result():
     if request.method=='POST':
         ownername=APP_CACHE['account_info']['login']
         repo_name=APP_CACHE['repo_name']
         branch_name=request.form['branch-dropdown'].strip()
-        branch_sha=""
+        branch_sha_list=[]
         for branch in APP_CACHE["branch_data"]:
             if branch["name"]==branch_name:
-                branch_sha=branch["commit"]["sha"]
-                break
-    
-
-        url=f"/repos/{ownername}/{repo_name}/commits?sha={branch_sha}"
-        fetched_data=github.get(url)
-        if fetched_data.ok:
-            fetched_data_json=fetched_data.json()
-            return render_template('result.html', repo_data=fetched_data_json)
+                branch_sha_list.append(branch["commit"]["sha"])
+                # break
+        all_branch_commits_data=[]
+        for branch_sha in branch_sha_list:
+            url=f"/repos/{ownername}/{repo_name}/commits?sha={branch_sha}"
+            branch_commits=github.get(url)
+            if branch_commits.ok:
+                branch_commits_json=branch_commits.json()
+                cleaned_branch_data=helpers.branch_data_converter(branch_commits_json)
+                all_branch_commits_data.append(cleaned_branch_data)
+        graph=helpers.adj_matrix_creator(all_branch_commits_data)
+        return render_template('result.html', graph_data=graph)
 
 if __name__ == "__main__":
     app.run(debug=True)
