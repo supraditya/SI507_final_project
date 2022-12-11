@@ -73,6 +73,10 @@ def branch_select():
             branch_names=[]
             for branch in APP_CACHE['branch_data']:
                 branch_names.append(branch["name"])
+            if cache.is_dict_in_cache(APP_CACHE, branch_names)==False:
+                APP_CACHE['branch_names']=branch_names
+                cache.save_cache(APP_CACHE)
+
             return render_template('credentials.html', account_name=APP_CACHE['account_info']['login'], branch_data=branch_names)
         else:
             return branch_url
@@ -83,11 +87,11 @@ def result():
         ownername=APP_CACHE['account_info']['login']
         repo_name=APP_CACHE['repo_name']
         branch_name=request.form['branch-dropdown'].strip()
-        branch_sha_list=[]
-        for branch in APP_CACHE["branch_data"]:
-            if branch["name"]==branch_name:
-                branch_sha_list.append(branch["commit"]["sha"])
-                # break
+        branch_sha_list=APP_CACHE['branch_names']
+        # for branch in APP_CACHE["branch_data"]:
+        #     if branch["name"]==branch_name:
+        #         branch_sha_list.append(branch["commit"]["sha"])
+        #         break
         all_branch_commits_data=[]
         for branch_sha in branch_sha_list:
             url=f"/repos/{ownername}/{repo_name}/commits?sha={branch_sha}"
