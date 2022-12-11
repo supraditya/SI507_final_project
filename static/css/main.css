@@ -5,13 +5,14 @@ body
 .container
 {
     width: 100%;
+    height: auto;
     border: solid 1px black;
     margin: auto;
     display: flex;
     justify-content: center;
     align-items: center;
 }
-.content
+#content
 {
     border: solid 1px red;
 }

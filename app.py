@@ -48,20 +48,20 @@ def github_login():
             if cache.is_dict_in_cache(APP_CACHE, account_info_json)==False:
                 APP_CACHE['account_info']=account_info_json
                 cache.save_cache(APP_CACHE)
-
-
             return render_template("credentials.html", account_name=account_info_json['login'])
 
     return '<h1>Request failed!</h1>'
 
-@app.route('/select-branch', methods=['POST', 'GET'])
-def branch_select():
+@app.route('/result', methods=['POST', 'GET'])
+def result():
     if request.method=='POST':
         ownername=APP_CACHE['account_info']['login']
-        repo_name=request.form['reponame'].strip()
+        repo_name=request.form['reponame']
         if cache.is_dict_in_cache(APP_CACHE, repo_name)==False:
-                APP_CACHE['repo_name']=repo_name
-                cache.save_cache(APP_CACHE)      
+            APP_CACHE['repo_name']=repo_name
+            cache.save_cache(APP_CACHE)  
+
+        #Fetching information on all branches within the given repo
         branch_url=f"/repos/{ownername}/{APP_CACHE['repo_name']}/branches"
         branch_data=github.get(branch_url)
 
@@ -74,34 +74,25 @@ def branch_select():
             for branch in APP_CACHE['branch_data']:
                 branch_names.append(branch["name"])
             if cache.is_dict_in_cache(APP_CACHE, branch_names)==False:
+                #Making a list of just the names of every branch in the repo
                 APP_CACHE['branch_names']=branch_names
                 cache.save_cache(APP_CACHE)
 
-            return render_template('credentials.html', account_name=APP_CACHE['account_info']['login'], branch_data=branch_names)
-        else:
-            return branch_url
-
-@app.route('/result', methods=['POST', 'GET'])
-def result():
-    if request.method=='POST':
-        ownername=APP_CACHE['account_info']['login']
-        repo_name=APP_CACHE['repo_name']
-        branch_name=request.form['branch-dropdown'].strip()
-        branch_sha_list=APP_CACHE['branch_names']
-        # for branch in APP_CACHE["branch_data"]:
-        #     if branch["name"]==branch_name:
-        #         branch_sha_list.append(branch["commit"]["sha"])
-        #         break
         all_branch_commits_data=[]
-        for branch_sha in branch_sha_list:
-            url=f"/repos/{ownername}/{repo_name}/commits?sha={branch_sha}"
+
+        for branch_name in APP_CACHE['branch_names']:
+            #Accessing individual branch commit history by inputting branch name as a query parameter into URL
+            url=f"/repos/{ownername}/{repo_name}/commits?sha={branch_name}"
             branch_commits=github.get(url)
             if branch_commits.ok:
                 branch_commits_json=branch_commits.json()
-                cleaned_branch_data=helpers.branch_data_converter(branch_commits_json)
+                cleaned_branch_data=helpers.branch_data_cleaner(branch_commits_json)
                 all_branch_commits_data.append(cleaned_branch_data)
         graph=helpers.adj_matrix_creator(all_branch_commits_data)
         return render_template('result.html', graph_data=graph)
 
 if __name__ == "__main__":
     app.run(debug=True)
+
+
+#Directed graph is ready in Data structure form. Visualize it now
