@@ -7,7 +7,7 @@ try:
     import cache_functions as cache
     import helper_functions as helpers
 
-    #LINE 7 is for development purposes ONLY, will be needed to execute OAuth in http localhost servers
+    #Following line is for development purposes ONLY, will be needed to execute OAuth in http localhost servers
     os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
 
     from dotenv import load_dotenv
@@ -89,7 +89,9 @@ def result():
                 cleaned_branch_data=helpers.branch_data_cleaner(branch_commits_json)
                 all_branch_commits_data.append(cleaned_branch_data)
         graph=helpers.adj_matrix_creator(all_branch_commits_data)
-        return render_template('result.html', graph_data=graph)
+        # first_commit=helpers.first_commit_finder(graph)
+        sorted_graph=helpers.adj_matrix_sorter(graph)
+        return render_template('result.html', graph_data=sorted_graph)
 
 if __name__ == "__main__":
     app.run(debug=True)

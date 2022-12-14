@@ -1,12 +1,25 @@
 {% extends "base.html" %} {% block content %}
-<link rel="stylesheet" type="text/css" href="../static/css/main.css"> 
+<link rel="stylesheet" type="text/css" href="../static/css/main.css" />
 <body>
-    {% if repo_data %}
-        <p>{{repo_data}}</p>
-    {% endif %}
+  <a href="/">Back to Home Page</a>
+  {% if graph_data %}
+  <p>{{graph_data}}</p>
+  <div class="graph">
+    {% for commit in graph_data.keys() %}
+        <div class="commit-circle">{{commit[0:7]}}</div>
+    {% endfor %}
+  </div>
 
-    {% if graph_data %}
-    <p>{{graph_data}}</p>
-    {% endif %}
+  {% endif %} {% if not graph_data %}
+  <p>Repository not found. Make sure:</p>
+  <ul>
+    <li>Make sure that you typed the repository name correctly.</li>
+    <li>That the repository name is entered in the correct case.</li>
+  </ul>
+  <p>
+    Note: If the repository is private, make sure it belongs to the account you
+    OAuth'ed with.
+  </p>
+  {% endif %}
 </body>
 {% endblock %}
