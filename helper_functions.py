@@ -33,23 +33,22 @@ def adj_matrix_creator(all_branches_list):
                     directed_graph_dict[commit["sha"]].append(other_commit["sha"])
     return directed_graph_dict    
 
-def first_commit_finder(directed_graph):
-    for key in directed_graph:
-        flag=0
-        for value in directed_graph.values():
-            if key in value:
-               flag=1
-               break
-        if flag==0:
-            return key 
+# def first_commit_finder(directed_graph):
+#     for key in directed_graph:
+#         flag=0
+#         for value in directed_graph.values():
+#             if key in value:
+#                flag=1
+#                break
+#         if flag==0:
+#             return key 
 
 def adj_matrix_sorter(directed_graph):
-    #sorting directed_graph keys by their timestamps, which is the first element in the list that is 
-    #the value of each key in directed_graph
+    #sorting directed_graph keys by their timestamps, which is the first element within the value of each key (values are lists)
     sorted_directed_graph = {key: val for key, val in sorted(directed_graph.items(), key = lambda ele: ele[1][0])}
 
     #Now, we remove the timestamps from the directed graph structure as it has served its purpose
     for key in sorted_directed_graph:
         sorted_directed_graph[key]=sorted_directed_graph[key][1:]
-        
+
     return sorted_directed_graph

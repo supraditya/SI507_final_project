@@ -97,4 +97,5 @@ if __name__ == "__main__":
     app.run(debug=True)
 
 
-#Directed graph is ready in Data structure form. Visualize it now
+#Unable to link branches from current structure. Change it so that DS is a dictionary of dictionaries
+#{branch-name: {current-directed-graph but just for that branch}, ...}
