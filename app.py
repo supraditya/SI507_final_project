@@ -80,17 +80,25 @@ def result():
 
         all_branch_commits_data=[]
 
+        branch_commits_dict={}
         for branch_name in APP_CACHE['branch_names']:
             #Accessing individual branch commit history by inputting branch name as a query parameter into URL
             url=f"/repos/{ownername}/{repo_name}/commits?sha={branch_name}"
             branch_commits=github.get(url)
             if branch_commits.ok:
                 branch_commits_json=branch_commits.json()
-                cleaned_branch_data=helpers.branch_data_cleaner(branch_commits_json)
+                branch_commits_sha_list=[]
+                for commit in branch_commits_json:
+                    branch_commits_sha_list.append(commit["sha"])
+                branch_commits_dict[branch_name]=branch_commits_sha_list
+                if cache.is_dict_in_cache(APP_CACHE, branch_commits_dict)==False:
+                    APP_CACHE['branch_commits_dict']=branch_commits_dict
+                    cache.save_cache(APP_CACHE) 
+                cleaned_branch_data=helpers.branch_data_cleaner(branch_commits_json, APP_CACHE)
                 all_branch_commits_data.append(cleaned_branch_data)
         graph=helpers.adj_matrix_creator(all_branch_commits_data)
-        # first_commit=helpers.first_commit_finder(graph)
         sorted_graph=helpers.adj_matrix_sorter(graph)
+
         return render_template('result.html', graph_data=sorted_graph)
 
 if __name__ == "__main__":
@@ -99,3 +107,5 @@ if __name__ == "__main__":
 
 #Unable to link branches from current structure. Change it so that DS is a dictionary of dictionaries
 #{branch-name: {current-directed-graph but just for that branch}, ...}
+
+#OR use a python library to visualize your current DS
