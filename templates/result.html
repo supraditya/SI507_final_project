@@ -2,6 +2,9 @@
 <link rel="stylesheet" type="text/css" href="../static/css/main.css" />
 <body>
   <a href="/">Back to Home Page</a>
+  <br>
+  <br>
+  <br>
   {% if graph_data %}
   <div class="graph">
     {% for commit in graph_data.keys() %}
@@ -14,7 +17,7 @@
         <div class="edge-container">
           <div class="edge"></div>
           {% for branch_name in graph_data[commit][0] %}
-          <span>{{branch_name}},&nbsp;</span>
+          <span>&nbsp;{{branch_name}},&nbsp;</span>
           {% endfor %}
         </div>
         {% endif %}
