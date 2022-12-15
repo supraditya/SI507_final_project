@@ -1,4 +1,7 @@
 
+import base64
+
+
 try:
     from pathlib import Path
     import os
@@ -6,6 +9,9 @@ try:
     from requests.auth import HTTPBasicAuth
     import cache_functions as cache
     import helper_functions as helpers
+    import networkx as nx
+    import matplotlib.pyplot as plt
+    from io import BytesIO
 
     #Following line is for development purposes ONLY, will be needed to execute OAuth in http localhost servers
     os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
@@ -19,7 +25,7 @@ try:
     import json
     from time import time
     from random import random
-    from flask import Flask, render_template, make_response
+    from flask import Flask, render_template, make_response, send_file
     from flask_dance.contrib.github import make_github_blueprint, github
 except Exception as e:
     print("Some Modules are Missing {}".format(e))
@@ -98,8 +104,22 @@ def result():
                 all_branch_commits_data.append(cleaned_branch_data)
         graph=helpers.adj_matrix_creator(all_branch_commits_data)
         sorted_graph=helpers.adj_matrix_sorter(graph)
+        nodes,edges=helpers.nodes_and_edges(sorted_graph)
+        G = nx.DiGraph()
+        G.add_nodes_from(nodes)
+        G.add_edges_from(edges)
+        nx.draw(G)
+        
+        # base64 encode graph image 
+        figfile = BytesIO()
+        plt.savefig(figfile, format='png')
+        plt.close()
 
-        return render_template('result.html', graph_data=sorted_graph)
+        figfile.seek(0)
+        figdata_png = base64.b64encode(figfile.getvalue()).decode('ascii')
+            
+
+        return render_template('result.html', graph_data=sorted_graph, image_base64=figdata_png)
 
 if __name__ == "__main__":
     app.run(debug=True)
