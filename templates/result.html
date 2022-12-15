@@ -3,7 +3,6 @@
 <body>
   <a href="/">Back to Home Page</a>
   {% if graph_data %}
-  <p>{{graph_data}}</p>
   <div class="graph">
     {% for commit in graph_data.keys() %}
     <div class="commit">
