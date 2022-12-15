@@ -59,3 +59,9 @@ def nodes_and_edges(directed_graph):
         for value in directed_graph[key]:
             edges.append((key,)+(value,))
     return nodes, edges
+
+def node_dict_generator(directed_graph):
+    nodes_dict={}
+    for key in directed_graph:
+        nodes_dict[key]=key[0:7]
+    return nodes_dict

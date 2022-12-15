@@ -2,20 +2,18 @@
 <link rel="stylesheet" type="text/css" href="../static/css/main.css" />
 <body>
   <a href="/">Back to Home Page</a>
-  {% if image_base64 %}
-  <img src="data:image/png;base64, {{image_base64}}" />
-  {% endif %} {% if graph_data %}
-  <p>{{graph_data}}</p>
-  <div class="graph">
-    {% for commit in graph_data.keys() %}
-    <div class="commit-circle">{{commit[0:7]}}</div>
-    <div class="edge-container">
-      {% for branch_name in graph_data[commit][0] %} {% if
-      graph_data[commit]|length > 1 %}
-      <div class="edge">{{branch_name}}</div>
-      {% endif %} {% endfor %}
+  <br />
+  <br />
+  <br />
+  {% if graph_data %} {% if image_base64 %}
+  <div class="inner-container">
+    <img class="graph-image" src="data:image/png;base64, {{image_base64}}" />
+    {% endif %}
+    <div class="graph">
+      {% for commit in graph_data.keys() %}
+      <div class="commit-circle">{{commit[0:7]}}</div>
+      {% endfor %}
     </div>
-    {% endfor %}
   </div>
 
   {% endif %} {% if not graph_data %}

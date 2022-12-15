@@ -10,7 +10,9 @@ try:
     import cache_functions as cache
     import helper_functions as helpers
     import networkx as nx
+    import matplotlib
     import matplotlib.pyplot as plt
+    matplotlib.use('Agg')
     from io import BytesIO
 
     #Following line is for development purposes ONLY, will be needed to execute OAuth in http localhost servers
@@ -104,17 +106,22 @@ def result():
                 all_branch_commits_data.append(cleaned_branch_data)
         graph=helpers.adj_matrix_creator(all_branch_commits_data)
         sorted_graph=helpers.adj_matrix_sorter(graph)
+        
+        #plotting the networkx graph
         nodes,edges=helpers.nodes_and_edges(sorted_graph)
+        nodes=helpers.node_dict_generator(sorted_graph)
+
         G = nx.DiGraph()
         G.add_nodes_from(nodes)
         G.add_edges_from(edges)
-        nx.draw(G)
-        
+        # nx.draw(G)
+        nx.draw_networkx(G, arrows=True, with_labels=True, labels=nodes, font_color='goldenrod')
+
         # base64 encode graph image 
         figfile = BytesIO()
         plt.savefig(figfile, format='png')
         plt.close()
-
+        plt.clf()
         figfile.seek(0)
         figdata_png = base64.b64encode(figfile.getvalue()).decode('ascii')
             
