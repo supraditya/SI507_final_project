@@ -99,7 +99,7 @@ def result():
         graph=helpers.adj_matrix_creator(all_branch_commits_data)
         sorted_graph=helpers.adj_matrix_sorter(graph)
 
-        return render_template('result.html', graph_data=sorted_graph)
+        return render_template('result.html', graph_data=sorted_graph, first_commit=list(sorted_graph.keys())[0], branch_names=APP_CACHE["branch_names"])
 
 if __name__ == "__main__":
     app.run(debug=True)

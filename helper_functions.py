@@ -50,3 +50,4 @@ def adj_matrix_sorter(directed_graph):
         sorted_directed_graph[key]=sorted_directed_graph[key][1:]
 
     return sorted_directed_graph
+
