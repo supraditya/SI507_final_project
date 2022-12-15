@@ -12,8 +12,9 @@
       <div class="commit-node-edge">
         {% if commit!=first_commit %}
         <div class="edge-container">
+          <div class="edge"></div>
           {% for branch_name in graph_data[commit][0] %}
-          <div class="edge">{{branch_name}}</div>
+          <span>{{branch_name}},&nbsp;</span>
           {% endfor %}
         </div>
         {% endif %}
