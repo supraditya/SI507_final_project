@@ -8,6 +8,7 @@
   <br>
   <br>
   {% if node_branch_data %}
+  <!-- Button needed to execute function that will adjust the <svg> element's size to that of the graph div -->
   <button onclick="svgSizer();">Calibrate Black Div</button>
   <div id="graph" onload="svgSizer();">
     <svg id="svg-canvas"></svg>
