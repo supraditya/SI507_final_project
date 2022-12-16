@@ -34,10 +34,10 @@ body
     height: 20px;
 }
 
-.graph
+#graph
 {
     width: 90vw;
-    /* border: solid 1px black; */
+    border: solid 1px red;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -62,7 +62,7 @@ body
     min-height: 30px;
     /* line-height: 10%; */
     text-orientation: upright;
-    border-right: solid 3px red;
+    /* border-right: solid 3px red; */
 }
 .commit
 {
@@ -107,6 +107,11 @@ body
 }
 #svg-canvas
 {
-    top: -2.8%;
-    left: 2%
+    /* top: -2.8%;
+    left: 2%; */
+    border: solid 1px black; 
+    position:absolute; 
+    z-index:0;
+    /* height: 300vh;
+    width: 100%; */
 }
