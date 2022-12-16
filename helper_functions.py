@@ -10,6 +10,7 @@ def branch_data_cleaner(branch_data, APP_CACHE):
         simplified_commit["sha"]=commit["sha"]
         simplified_commit["parents"]=commit["parents"]
         simplified_commit["timestamp"]=commit["commit"]["author"]["date"]
+        simplified_commit["message"]=commit["commit"]["message"]
         if "branch_name" not in simplified_commit.keys():
             simplified_commit["branches"]=[]
         for key in APP_CACHE["branch_commits_dict"]:
@@ -33,6 +34,7 @@ def adj_matrix_creator(all_branches_list):
         #Adding commit timestamp as first element in the array (for ordering)
         directed_graph_dict[commit["sha"]].append(commit["timestamp"])
         directed_graph_dict[commit["sha"]].append(commit["branches"])
+        directed_graph_dict[commit["sha"]].append(commit["message"])
 
         for other_commit in flattened_list:
             parents_list=other_commit["parents"]
@@ -50,10 +52,12 @@ def graph_data_pruner(directed_graph):
         #Now, we remove everything but the commit nodes list of branches (that is belongs to)
     branches_graph={}
     children_graph={}
+    message_graph={}
     for key in directed_graph:
         branches_graph[key]=directed_graph[key][1:2]
-        children_graph[key]=directed_graph[key][2:]
-    return branches_graph, children_graph
+        children_graph[key]=directed_graph[key][3:]
+        message_graph[key]=directed_graph[key][2:3]
+    return branches_graph, children_graph, message_graph
 
 # def graph_children_data_pruner(directed_graph):
 #         #Now, we remove everything but the commit nodes list of branches (that is belongs to)

@@ -44,9 +44,9 @@ function createLines(parentnodeId) {
         line = document.createElementNS("http://www.w3.org/2000/svg", "line");
         line.id = parentnodeId + childId;
         line.setAttribute("x1", parent_x + 20);
-        line.setAttribute("y1", parent_y - 240);
+        line.setAttribute("y1", parent_y - 120);
         line.setAttribute("x2", child_x + 20);
-        line.setAttribute("y2", child_y - 240);
+        line.setAttribute("y2", child_y - 120);
         line.setAttribute("stroke", "black");
         svg.appendChild(line);
         console.log("Added!");

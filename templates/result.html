@@ -6,15 +6,10 @@
   <br>
   <br>
   <br>
-  <h3>Welcome to the visualizer!</h3>
-  <p>Some Instructions:</p>
-  <ol>
-    <li>Hit the 'calibrate black div' button to set the size of the svg canvas (for edge drawing) equal to that of the graph height</li>
-    <li>Hover over the commit nodes to render the edges and visualize the repository!</li>
-  </ol>
+  <!-- <h3>Welcome to the visualizer!</h3> -->
+  <button onclick="svgSizer();">Calibrate Black Div</button>
 
   {% if node_branch_data %}
-  <button onclick="svgSizer();">Calibrate Black Div</button>
   <div id="graph" onload="svgSizer();">
     <svg id="svg-canvas"></svg>
     {% for commit in node_branch_data.keys() %}
@@ -33,7 +28,7 @@
         {% endif %}
         <div class="commit-node-container">
           <div onmouseenter="hoverShow(this.id)" onmouseleave="hoverHide(this.id)" class="commit-circle" id="{{commit}}" name="{{node_children_data[commit]}}" onmouseover="createLines(this.id)">{{commit[0:7]}}</div>
-          <div class="node-info" id="node-info-{{commit}}">Children Nodes: {{node_children_data[commit]}}</div>
+          <div class="node-info" id="node-info-{{commit}}">Message: {{node_message_data[commit]}}</div>
         </div>
       </div>
     </div>
