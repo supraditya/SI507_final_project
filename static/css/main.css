@@ -73,22 +73,29 @@ body
 .spacer
 {
     width: 60px;
-    border: solid 1px green;
+    /* border: solid 1px green; */
     /* height: 100%; */
     /* transform: rotate(45deg); */
 }
-/* .space
-{
-    display: flex;
-    transform: rotate(45deg);
-    transform: translateX(50%)TranslateY(-80px)rotate(45deg);
-} */
+
 .commit-node-edge
 {
     display: flex;
     width: 80vw;
     flex-direction: column;
+}
+
+.commit-node-container
+{
+    display: flex;
+    border: solid 1px blue;
     /* justify-content: center; */
-    /* align-items: center; */
-    /* border: solid 1px black; */
+    align-items: center;
+}
+
+.node-info
+{
+    display: none;
+    border: solid 1px red;
+    margin-left: 3%;
 }

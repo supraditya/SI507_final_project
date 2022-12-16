@@ -1,5 +1,6 @@
 {% extends "base.html" %} {% block content %}
 <link rel="stylesheet" type="text/css" href="../static/css/main.css" />
+<script src="../static/js/script.js"></script>
 <body>
   <a href="/">Back to Home Page</a>
   <br>
@@ -21,7 +22,10 @@
           {% endfor %}
         </div>
         {% endif %}
-        <div class="commit-circle">{{commit[0:7]}}</div>
+        <div class="commit-node-container">
+          <div onmouseenter="hoverShow(this.id)" onmouseleave="hoverHide(this.id)" class="commit-circle" id="{{commit}}">{{commit[0:7]}}</div>
+          <div class="node-info" id="node-info-{{commit}}">Node Info here</div>
+        </div>
       </div>
     </div>
     {% endfor %}
