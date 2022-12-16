@@ -69,7 +69,9 @@ def result():
             branch_data_json=branch_data.json()
             if cache.is_dict_in_cache(APP_CACHE, branch_data_json)==False:
                 APP_CACHE['branch_data']=branch_data_json
-                cache.save_cache(APP_CACHE)           
+                cache.save_cache(APP_CACHE)
+            # if APP_CACHE['branch_data']["message"]=="Not Found":
+            #     return render_template('result.html')           
             branch_names=[]
             for branch in APP_CACHE['branch_data']:
                 branch_names.append(branch["name"])
@@ -77,7 +79,8 @@ def result():
                 #Making a list of just the names of every branch in the repo
                 APP_CACHE['branch_names']=branch_names
                 cache.save_cache(APP_CACHE)
-
+        else:
+            return render_template('result.html')  
         all_branch_commits_data=[]
 
         branch_commits_dict={}
@@ -104,8 +107,3 @@ def result():
 if __name__ == "__main__":
     app.run(debug=True)
 
-
-#Unable to link branches from current structure. Change it so that DS is a dictionary of dictionaries
-#{branch-name: {current-directed-graph but just for that branch}, ...}
-
-#OR use a python library to visualize your current DS

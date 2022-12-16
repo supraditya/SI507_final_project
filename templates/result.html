@@ -2,14 +2,13 @@
 <link rel="stylesheet" type="text/css" href="../static/css/main.css" />
 <script src="../static/js/script.js"></script>
 <body>
+
   <a href="/">Back to Home Page</a>
   <br>
   <br>
   <br>
-  <!-- <h3>Welcome to the visualizer!</h3> -->
-  <button onclick="svgSizer();">Calibrate Black Div</button>
-
   {% if node_branch_data %}
+  <button onclick="svgSizer();">Calibrate Black Div</button>
   <div id="graph" onload="svgSizer();">
     <svg id="svg-canvas"></svg>
     {% for commit in node_branch_data.keys() %}

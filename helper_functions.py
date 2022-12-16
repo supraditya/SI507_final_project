@@ -3,6 +3,9 @@ import numpy as np
 
 
 def branch_data_cleaner(branch_data, APP_CACHE):
+    '''
+    
+    '''
     simplified_data=[]
     for commit in branch_data:
         simplified_commit={}
