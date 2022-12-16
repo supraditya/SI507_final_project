@@ -24,7 +24,9 @@
 - Repository used for example:
 https://github.com/supradtya/test-repo3
 
-[IMAGE from git graph]
+What the repository looks like according to Git Graph:
+
+![git graph](https://user-images.githubusercontent.com/43109943/208039912-1e93747c-65ce-4cc7-b7aa-28a06a8f3619.png)
 
 `branch_graph={'fdfea8ae454de76f6ae17bc8c882c4833f67681e': [['branch-2', 'branch-3', 'branch-4', 'main', 'something']], 'd8fdb3b1a0300958242d84052dcd256979aa4d61': [['branch-2', 'branch-3', 'branch-4', 'main', 'something']], '6e6f6ee948be9b4b9e60d6028fd3eec5e89447c7': [['branch-2', 'branch-3']], '527b8e45dc34c7678a0a374888907aaeb2e6c2a8': [['branch-4', 'main', 'something']], '8b9bcdcc77b648cffa09cd7d24d1d489b6794902': [['something']], '95d89962953ee8f3806a764587a39b7470428406': [['main']]}`
 
@@ -33,7 +35,16 @@ https://github.com/supradtya/test-repo3
 
 `children_graph={'fdfea8ae454de76f6ae17bc8c882c4833f67681e': ['d8fdb3b1a0300958242d84052dcd256979aa4d61'], 'd8fdb3b1a0300958242d84052dcd256979aa4d61': ['6e6f6ee948be9b4b9e60d6028fd3eec5e89447c7', '527b8e45dc34c7678a0a374888907aaeb2e6c2a8'], '6e6f6ee948be9b4b9e60d6028fd3eec5e89447c7': [], '527b8e45dc34c7678a0a374888907aaeb2e6c2a8': ['95d89962953ee8f3806a764587a39b7470428406', '8b9bcdcc77b648cffa09cd7d24d1d489b6794902'], '8b9bcdcc77b648cffa09cd7d24d1d489b6794902': [], '95d89962953ee8f3806a764587a39b7470428406': []}`
 
-[Screenshots for data structures within application]
+###Screenshots for data structures within application
+branch_graph
+![branch_data](https://user-images.githubusercontent.com/43109943/208040010-823f370e-ebaa-4db4-a083-d26243ce4c0d.png)
+
+children_graph
+![children data](https://user-images.githubusercontent.com/43109943/208040013-3cd9bc3a-a543-474f-b41b-5872c09e65c5.png)
+
+message_graph
+![message_data](https://user-images.githubusercontent.com/43109943/208040014-5d91b509-2383-4843-93cd-24c8ad80e3ad.png)
+
 
 ## Features
 - Ability to visualize all your repositories, both public and private!
