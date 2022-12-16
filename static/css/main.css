@@ -2,13 +2,14 @@ body
 {
     background-color: aquamarine;
 }
-.container
+#container
 {
     width: 100%;
     height: auto;
     /* border: solid 1px black; */
     /* margin: auto; */
-    display: flex;
+    /* display: flex; */
+    /* flex: none; */
     justify-content: center;
     align-items: center;
     /* min-height: 97vh; */
@@ -103,4 +104,9 @@ body
     border-radius: 6px;
     background-color: whitesmoke;
     margin-left: 3%;
+}
+#svg-canvas
+{
+    top: -2.8%;
+    left: 2%
 }

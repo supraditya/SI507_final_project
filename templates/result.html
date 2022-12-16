@@ -6,15 +6,11 @@
   <br>
   <br>
   <br>
-  {% if graph %}
-  <p>{{graph}}</p>
-  {% endif %}
-  {% if node_children_data %}
-  <p>{{node_children_data}}</p>
-  {% endif %}
+
   {% if node_branch_data %}
 
-  <p>{{node_branch_data}}</p>
+
+  <svg id="svg-canvas" style="border: solid 1px black; position:absolute; z-index:1" viewBox="0 0 1000 1000"></svg>
   <div class="graph">
     {% for commit in node_branch_data.keys() %}
     <div class="commit">
