@@ -28,7 +28,7 @@
         {% endif %}
         <div class="commit-node-container">
           <div onmouseenter="hoverShow(this.id)" onmouseleave="hoverHide(this.id)" class="commit-circle" id="{{commit}}" name="{{node_children_data[commit]}}" onmouseover="createLines(this.id)">{{commit[0:7]}}</div>
-          <div class="node-info" id="node-info-{{commit}}">Message: {{node_message_data[commit]}}</div>
+          <div class="node-info" id="node-info-{{commit}}">Message: {{node_message_data[commit][0]}}</div>
         </div>
       </div>
     </div>
