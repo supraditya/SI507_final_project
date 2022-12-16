@@ -97,9 +97,9 @@ def result():
                 cleaned_branch_data=helpers.branch_data_cleaner(branch_commits_json, APP_CACHE)
                 all_branch_commits_data.append(cleaned_branch_data)
         graph=helpers.adj_matrix_creator(all_branch_commits_data)
-        sorted_graph=helpers.adj_matrix_sorter(graph)
-
-        return render_template('result.html', graph_data=sorted_graph, first_commit=list(sorted_graph.keys())[0], branch_names=APP_CACHE["branch_names"])
+        sorted_graph=helpers.graph_sorter(graph)
+        node_branch_dict, node_children_dict=helpers.graph_data_pruner(sorted_graph)
+        return render_template('result.html', graph=graph, node_children_data=node_children_dict, node_branch_data=node_branch_dict, first_commit=list(node_branch_dict.keys())[0], branch_names=APP_CACHE["branch_names"])
 
 if __name__ == "__main__":
     app.run(debug=True)

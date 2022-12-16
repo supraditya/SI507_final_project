@@ -6,18 +6,26 @@
   <br>
   <br>
   <br>
-  {% if graph_data %}
+  {% if graph %}
+  <p>{{graph}}</p>
+  {% endif %}
+  {% if node_children_data %}
+  <p>{{node_children_data}}</p>
+  {% endif %}
+  {% if node_branch_data %}
+
+  <p>{{node_branch_data}}</p>
   <div class="graph">
-    {% for commit in graph_data.keys() %}
+    {% for commit in node_branch_data.keys() %}
     <div class="commit">
-      {% for i in range (0, branch_names.index(graph_data[commit][0][0])) %}
+      {% for i in range (0, branch_names.index(node_branch_data[commit][0][0])) %}
       <div class="spacer"></div>
       {% endfor %}
       <div class="commit-node-edge">
         {% if commit!=first_commit %}
         <div class="edge-container">
           <div class="edge"></div>
-          {% for branch_name in graph_data[commit][0] %}
+          {% for branch_name in node_branch_data[commit][0] %}
           <span>&nbsp;{{branch_name}},&nbsp;</span>
           {% endfor %}
         </div>
@@ -31,7 +39,7 @@
     {% endfor %}
   </div>
 
-  {% endif %} {% if not graph_data %}
+  {% endif %} {% if not node_branch_data %}
   <p>Repository not found. Make sure:</p>
   <ul>
     <li>Make sure that you typed the repository name correctly.</li>
