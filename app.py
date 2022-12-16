@@ -45,7 +45,7 @@ def github_login():
         account_info = github.get('/user')
         if account_info.ok:
             account_info_json = account_info.json()
-            if cache.is_dict_in_cache(APP_CACHE, account_info_json)==False:
+            if cache.is_entry_in_cache(APP_CACHE, account_info_json)==False:
                 APP_CACHE['account_info']=account_info_json
                 cache.save_cache(APP_CACHE)
             return render_template("credentials.html", account_name=account_info_json['login'])
@@ -57,7 +57,7 @@ def result():
     if request.method=='POST':
         ownername=APP_CACHE['account_info']['login']
         repo_name=request.form['reponame']
-        if cache.is_dict_in_cache(APP_CACHE, repo_name)==False:
+        if cache.is_entry_in_cache(APP_CACHE, repo_name)==False:
             APP_CACHE['repo_name']=repo_name
             cache.save_cache(APP_CACHE)  
 
@@ -67,15 +67,13 @@ def result():
 
         if branch_data.ok:
             branch_data_json=branch_data.json()
-            if cache.is_dict_in_cache(APP_CACHE, branch_data_json)==False:
+            if cache.is_entry_in_cache(APP_CACHE, branch_data_json)==False:
                 APP_CACHE['branch_data']=branch_data_json
-                cache.save_cache(APP_CACHE)
-            # if APP_CACHE['branch_data']["message"]=="Not Found":
-            #     return render_template('result.html')           
+                cache.save_cache(APP_CACHE)          
             branch_names=[]
             for branch in APP_CACHE['branch_data']:
                 branch_names.append(branch["name"])
-            if cache.is_dict_in_cache(APP_CACHE, branch_names)==False:
+            if cache.is_entry_in_cache(APP_CACHE, branch_names)==False:
                 #Making a list of just the names of every branch in the repo
                 APP_CACHE['branch_names']=branch_names
                 cache.save_cache(APP_CACHE)
@@ -94,7 +92,7 @@ def result():
                 for commit in branch_commits_json:
                     branch_commits_sha_list.append(commit["sha"])
                 branch_commits_dict[branch_name]=branch_commits_sha_list
-                if cache.is_dict_in_cache(APP_CACHE, branch_commits_dict)==False:
+                if cache.is_entry_in_cache(APP_CACHE, branch_commits_dict)==False:
                     APP_CACHE['branch_commits_dict']=branch_commits_dict
                     cache.save_cache(APP_CACHE) 
                 cleaned_branch_data=helpers.branch_data_cleaner(branch_commits_json, APP_CACHE)

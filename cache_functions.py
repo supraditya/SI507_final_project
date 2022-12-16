@@ -46,8 +46,26 @@ def save_cache(cache_dict):
     fw.write(dumped_json_cache)
     fw.close()
 
-def is_dict_in_cache(cache_dict, dict_to_be_added):
-    #TODO: Add docstring
-    if dict_to_be_added not in cache_dict.items():
+def is_entry_in_cache(cache_dict, entry_to_be_added):
+    '''
+    Function checkes whether an entry is already present within the cache
+
+    PARAMETERS
+    ==============================
+    cache_dict: dict
+    A dictionary containing the application cache, as passed by the calling function
+
+    entry_to_be_added: dict, list
+    A value which needs to be searched for within the application cache
+
+    RETURNS
+    =============================
+    boolean
+    True if entry is found
+    False otherwise
+
+
+    '''
+    if entry_to_be_added not in cache_dict.items():
         return False
     return True
